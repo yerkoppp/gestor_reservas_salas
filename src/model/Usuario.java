@@ -1,5 +1,6 @@
 package model;
 
+
 public class Usuario {
 
 	private int idusuario;
@@ -25,7 +26,7 @@ public class Usuario {
 		this.idusuario = 1;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
-		this.run = run;
+		this.setRun(run);
 	}
 
 
@@ -91,7 +92,7 @@ public class Usuario {
 	 * @param run the run to set
 	 */
 	public void setRun(String run) {
-		this.run = run;
+		this.run = Validacion.validarRut(run);
 	}
 
 

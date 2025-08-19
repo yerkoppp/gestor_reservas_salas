@@ -4,11 +4,15 @@ import conexion.DBCreacion;
 import conexion.DBManager;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
 import dao.ReservasDAO;
 import dao.SalasDAO;
 import dao.UsuariosDAO;
 import model.Sala;
+import model.Reserva;
 import model.Usuario;
 
 import java.util.InputMismatchException;
@@ -22,6 +26,7 @@ public class Main {
     public static void main(String[] args) {
         try (Connection conn = DBManager.getConnection()) {
             System.out.println("✅ Conexión exitosa a la base de datos!");
+            DBCreacion db = new DBCreacion();
             
         } catch (SQLException e) {
             System.err.println("❌ Error SQL al conectar: " + e.getMessage());
@@ -80,7 +85,7 @@ public class Main {
 	public static void ejecutarOpcion(int opcion) {
 		switch (opcion) {
 		case 1: // RESERVAR SALA
-			resgitrarSala();
+			resgistrarSala();
 			break;
 		case 2: // REGISTRAR USUARIO
 			registrarUsuario();
@@ -111,6 +116,23 @@ public class Main {
 
 	private static void hacerReserva() {
 		// TODO Auto-generated method stub
+		System.out.println("Ingrese su ID de usuario: ");
+		int idusuario = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.println("Ingrese el ID de la sala que desea reservar: ");
+		int idsala = sc.nextInt();
+		sc.nextLine();
+		
+		System.out.println("Ingrese la fecha que desea reservar: ");
+		String fechaReserva = sc.nextLine();
+	
+		Reserva nuevaReserva = new Reserva(idsala, idusuario, Date.valueOf(LocalDate.now()), Date.valueOf(fechaReserva));
+		ReservasDAO reservaDao = new ReservasDAO();
+		 // 🔹 INSERTAR nuevo usuario
+        if (reservaDao.insertarReserva(nuevaReserva)) {
+            System.out.println("\n✅ Reserva ingresada correctamente.");
+        }
 		
 	}
 
@@ -132,10 +154,15 @@ public class Main {
         if (usuarioDao.insertarUsuario(nuevoUsuario)) {
             System.out.println("\n✅ Usuario registrado correctamente.");
         }
+        
+        int id = usuarioDao.consultarID(nuevoUsuario);
+        System.out.println("Su ID de usuario es: "+id);
+        nuevoUsuario.setIdusuario(id);
 		
 	}
 
-	private static void resgitrarSala() {
+
+	private static void resgistrarSala() {
 		
 		while (true) {
 			try {
@@ -159,9 +186,10 @@ public class Main {
 				sc.nextLine();
 			}
 		}
-		
-		
 	}
+		
+
+	
 
 	public static void pruebaDAO() {
     	

@@ -30,11 +30,34 @@ public class UsuariosDAO {
             return false;
         }
     }
+    
+    public int consultarID(Usuario usuario) {
+    	int idUsuario = 0;
+        String sql = "SELECT idusuario FROM usuarios WHERE run=?";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getRun());
+
+            try (ResultSet rs = stmt.executeQuery()){
+            	
+            	if (rs.next()) {
+            		idUsuario = rs.getInt("idusuario");
+            	}
+            }
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        
+        return idUsuario;
+    }
+    
+    
 
     // READ
     public List<Usuario> listarUsuarios() {
         List<Usuario> lista = new ArrayList<>();
-        String sql = "SELECT * FROM ventas";
+        String sql = "SELECT * FROM usuarios";
         try (Connection conn = DBManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

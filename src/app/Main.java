@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import dao.ReservasDAO;
-import model.Venta;
+import dao.UsuariosDAO;
+import model.Usuario;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -110,6 +111,22 @@ public class Main {
 
 	private static void registrarUsuario() {
 		// TODO Auto-generated method stub
+		
+		System.out.println("Ingrese los nombres del nuevo usuario: ");
+		String nombres = sc.nextLine();
+		
+		System.out.println("Ingrese los apellidos del nuevo usuario: ");
+		String apellidos = sc.nextLine();
+		
+		System.out.println("Ingrese el run del nuevo usuario: ");
+		String run = sc.nextLine();
+		
+		Usuario nuevoUsuario = new Usuario(nombres, apellidos, run);
+		UsuariosDAO usuarioDao = new UsuariosDAO();
+		 // 🔹 INSERTAR nuevo usuario
+        if (usuarioDao.insertarUsuario(nuevoUsuario)) {
+            System.out.println("\n✅ Usuario registrado correctamente.");
+        }
 		
 	}
 

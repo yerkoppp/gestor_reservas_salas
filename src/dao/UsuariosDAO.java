@@ -13,7 +13,7 @@ public class UsuariosDAO {
 	}
 	    
     // CREATE
-    public boolean insertarReserva(Usuario usuario) {
+    public boolean insertarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios (nombres, apellidos, run) " +
                      "VALUES (?, ?, ?)";
         try (Connection conn = DBManager.getConnection();

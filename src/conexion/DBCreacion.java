@@ -1,7 +1,6 @@
 package conexion;
 
 import conexion.DBManager;
-import model.Venta;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;

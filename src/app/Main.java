@@ -137,17 +137,29 @@ public class Main {
 
 	private static void registrarUsuario() {
 		// TODO Auto-generated method stub
+		Usuario nuevoUsuario = new Usuario();
+		String nombres, apellidos, run;
 		
 		System.out.println("Ingrese los nombres del nuevo usuario: ");
-		String nombres = sc.nextLine();
+		nombres = sc.nextLine();
+		nuevoUsuario.setNombres(nombres);
 		
 		System.out.println("Ingrese los apellidos del nuevo usuario: ");
-		String apellidos = sc.nextLine();
+		apellidos = sc.nextLine();
+		nuevoUsuario.setApellidos(apellidos);
 		
-		System.out.println("Ingrese el run del nuevo usuario: ");
-		String run = sc.nextLine();
+		while (true) {
+			try {
+				System.out.println("Ingrese el run del nuevo usuario: ");
+				run = sc.nextLine();
+				nuevoUsuario.setRun(run);
+				break;
+			} catch (IllegalArgumentException e) {
+				System.out.println(e.getMessage());
+			}
+
+		}
 		
-		Usuario nuevoUsuario = new Usuario(nombres, apellidos, run);
 		UsuariosDAO usuarioDao = new UsuariosDAO();
 		 // 🔹 INSERTAR nuevo usuario
         if (usuarioDao.insertarUsuario(nuevoUsuario)) {

@@ -10,56 +10,10 @@ import java.util.List;
 public class ReservasDAO {
 	
 	public ReservasDAO() {
-		crearTablaSalas();
 	}
-	
-    private void crearTablaSalas(){
-        // DDL (Data Definition Language) - Define la estructura de la tabla
-        String sql = """
-            CREATE TABLE IF NOT EXISTS salas (
-                idsala INT AUTO_INCREMENT PRIMARY KEY,  -- Clave primaria que se incrementa automáticamente
-                nombre VARCHAR (30) NOT NULL,           -- Contenido del mensaje (obligatorio)
-                capacidad INT 							-- Capacidad de la sala
-            )
-        """;
-        
-        // try-with-resources: Garantiza que el Statement se cierre automáticamente
-        try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            // Statement se usa para ejecutar SQL estático (sin parámetros)
-            stmt.execute(sql);
-            
-        } catch (SQLException | IOException e) {
-            System.err.println("Error al crear tabla: " + e.getMessage());
-        }
-    }
-    
-    private void crearTablarReservas() {
-        // DDL (Data Definition Language) - Define la estructura de la tabla
-        String sql = """
-            CREATE TABLE IF NOT EXISTS reservas (
-                idreservas INT AUTO_INCREMENT PRIMARY KEY,  -- Clave primaria que se incrementa automáticamente
-                salas_idsalas INT NOT NULL, -- 
-                usuarios_idusuario INT NOT NULL,
-                fecha_reserva DATETIME NOT NULL,       -- Fecha y hora del registro (obligatorio)
-                mensaje TEXT NOT NULL               -- Contenido del mensaje (obligatorio)
-            )
-        """;
-        
-        // try-with-resources: Garantiza que el Statement se cierre automáticamente
-        try (Connection conn = DBManager.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            // Statement se usa para ejecutar SQL estático (sin parámetros)
-            stmt.execute(sql);
-            
-        } catch (SQLException | IOException e) {
-            System.err.println("Error al crear tabla: " + e.getMessage());
-        }
-    }
-
-    
+	    
     // CREATE
-    public boolean insertarVenta(Venta venta) {
+    public boolean insertarUsuario(Venta venta) {
         String sql = "INSERT INTO ventas (idventa, comprador, vendedor, cantarticulos, subtotal, impuesto, total) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBManager.getConnection();

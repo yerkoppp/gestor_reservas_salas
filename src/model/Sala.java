@@ -1,5 +1,6 @@
 package model;
 
+
 public class Sala {
 
 	private int idsala;
@@ -9,6 +10,12 @@ public class Sala {
 	public Sala() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Sala(String nombre, int capacidad) {
+		this.nombre = nombre;
+		this.capacidad = capacidad;
+	}
+	
 	
 	/**
 	 * @return the idsala
@@ -51,6 +58,7 @@ public class Sala {
 	public void setCapacidad(int capacidad) {
 		this.capacidad = capacidad;
 	}
+	
 
 	@Override
 	public String toString() {

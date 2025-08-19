@@ -1,11 +1,14 @@
 package app;
 
+import conexion.DBCreacion;
 import conexion.DBManager;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import dao.ReservasDAO;
+import dao.SalasDAO;
 import dao.UsuariosDAO;
+import model.Sala;
 import model.Usuario;
 
 import java.util.InputMismatchException;
@@ -25,6 +28,8 @@ public class Main {
         } catch (IOException e) {
             System.err.println("❌ Error de configuración: " + e.getMessage());
         }
+        
+        DBCreacion dbCreacion = new DBCreacion();
         
         pruebaDAO();
         
@@ -131,7 +136,30 @@ public class Main {
 	}
 
 	private static void resgitrarSala() {
-		// TODO Auto-generated method stub
+		
+		while (true) {
+			try {
+				System.out.println("Ingrese el nombres de la sala: ");
+				String nombres = sc.nextLine();
+				
+				System.out.println("Ingrese la capacidad de la sala: ");
+				int apellidos = sc.nextInt();
+				sc.nextLine();
+				
+				
+				Sala sala = new Sala(nombres, apellidos);
+				SalasDAO salaDAO = new SalasDAO();
+				 // 🔹 INSERTAR nuevo usuario
+		        if (salaDAO.insertarSalas(sala)) {
+		            System.out.println("\n✅ Usuario registrado correctamente.");
+		        }
+				break;
+			} catch (InputMismatchException e) {
+				System.out.println("⚠️ Ingrese un número válido.");
+				sc.nextLine();
+			}
+		}
+		
 		
 	}
 

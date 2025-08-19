@@ -36,7 +36,7 @@ public class ReservasDAO {
     // READ
     public List<Reserva> listarReservas() {
         List<Reserva> lista = new ArrayList<>();
-        String sql = "SELECT * FROM ventas";
+        String sql = "SELECT * FROM reservas";
         try (Connection conn = DBManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

@@ -34,10 +34,7 @@ public class Main {
             System.err.println("❌ Error de configuración: " + e.getMessage());
         }
         
-        DBCreacion dbCreacion = new DBCreacion();
-        
-        pruebaDAO();
-        
+        DBCreacion dbCreacion = new DBCreacion();      
         
         mostrarBienvenida();
 
@@ -85,7 +82,7 @@ public class Main {
 	public static void ejecutarOpcion(int opcion) {
 		switch (opcion) {
 		case 1: // RESERVAR SALA
-			resgistrarSala();
+			registrarSala();
 			break;
 		case 2: // REGISTRAR USUARIO
 			registrarUsuario();
@@ -110,8 +107,10 @@ public class Main {
 	}
     
     private static void verReservas() {
-		// TODO Auto-generated method stub
-		
+    	ReservasDAO reservaDao = new ReservasDAO();
+    	 System.out.println("\n📋 LISTADO DE RESERVAS:");
+         List<Reserva> reservas = reservaDao.listarReservas();
+         reservas.forEach(System.out::println);
 	}
 
 	private static void hacerReserva() {
@@ -124,7 +123,7 @@ public class Main {
 		int idsala = sc.nextInt();
 		sc.nextLine();
 		
-		System.out.println("Ingrese la fecha que desea reservar: ");
+		System.out.println("Ingrese la fecha que desea reservar (yyyy-mm-dd): ");
 		String fechaReserva = sc.nextLine();
 	
 		Reserva nuevaReserva = new Reserva(idsala, idusuario, Date.valueOf(LocalDate.now()), Date.valueOf(fechaReserva));
@@ -161,8 +160,7 @@ public class Main {
 		
 	}
 
-
-	private static void resgistrarSala() {
+	private static void registrarSala() {
 		
 		while (true) {
 			try {
@@ -176,9 +174,9 @@ public class Main {
 				
 				Sala sala = new Sala(nombres, apellidos);
 				SalasDAO salaDAO = new SalasDAO();
-				 // 🔹 INSERTAR nuevo usuario
+				
 		        if (salaDAO.insertarSalas(sala)) {
-		            System.out.println("\n✅ Usuario registrado correctamente.");
+		            System.out.println("\n✅ Sala registrada correctamente.");
 		        }
 				break;
 			} catch (InputMismatchException e) {
@@ -187,40 +185,7 @@ public class Main {
 			}
 		}
 	}
-		
-
-	
-
-	public static void pruebaDAO() {
-    	
-    	 ReservasDAO dao = new ReservasDAO();
-
-    	 
-    	 /*
-         // 🔹 LISTAR todas las ventas
-         System.out.println("\n📋 LISTADO DE VENTAS:");
-         List<Venta> ventas = dao.listarVentas();
-         ventas.forEach(System.out::println);
-
-         // 🔹 INSERTAR nueva venta
-         Venta nueva = new Venta(10, "CARLOS", "MARÍA PÉREZ", 3, 1500, 100, 1600);
-         if (dao.insertarVenta(nueva)) {
-             System.out.println("\n✅ Venta insertada correctamente.");
-         }
-
-         // 🔹 ACTUALIZAR una venta
-         Venta actualizada = new Venta(10, "CARLOS ACTUALIZADO", "MARÍA PÉREZ", 4, 2000, 150, 2150);
-         if (dao.actualizarVenta(actualizada)) {
-             System.out.println("\n✏ Venta actualizada correctamente.");
-         }
-
-         // 🔹 ELIMINAR una venta
-         if (dao.eliminarVenta(10)) {
-             System.out.println("\n🗑 Venta eliminada correctamente.");
-         }*/
-    }
-    
-    
+		   
     
     
 }

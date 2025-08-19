@@ -11,6 +11,24 @@ public class Usuario {
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+
+	/**
+	 * @param idusuario
+	 * @param nombres
+	 * @param apellidos
+	 * @param run
+	 */
+	public Usuario(String nombres, String apellidos, String run) {
+		this.idusuario = 1;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.run = run;
+	}
+
+
 
 
 	/**

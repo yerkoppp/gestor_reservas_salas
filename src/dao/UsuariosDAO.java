@@ -1,29 +1,27 @@
 package dao;
 
 import conexion.DBManager;
-import model.Reserva;
+import model.Usuario;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservasDAO {
+public class UsuariosDAO {
 	
-	public ReservasDAO() {
+	public UsuariosDAO() {
 	}
 	    
     // CREATE
-    public boolean insertarReserva(Reserva reserva) {
-        String sql = "INSERT INTO reservas (salas_idsala, usuarios_idusuario, fecha_creacion, fecha_reserva) " +
-                     "VALUES (?, ?, ?, ?)";
+    public boolean insertarReserva(Usuario usuario) {
+        String sql = "INSERT INTO usuarios (nombres, apellidos, run) " +
+                     "VALUES (?, ?, ?)";
         try (Connection conn = DBManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, reserva.getIdsala());
-            stmt.setInt(2, reserva.getIdusuario());
-            stmt.setDate(3, reserva.getFechaCreacion());
-            stmt.setDate(4, reserva.getFechaReserva());
-
+            stmt.setString(1, usuario.getNombres());
+            stmt.setString(2, usuario.getApellidos());
+            stmt.setString(3, usuario.getRun());
 
             return stmt.executeUpdate() > 0;
 
@@ -34,19 +32,18 @@ public class ReservasDAO {
     }
 
     // READ
-    public List<Reserva> listarReservas() {
-        List<Reserva> lista = new ArrayList<>();
+    public List<Usuario> listarUsuarios() {
+        List<Usuario> lista = new ArrayList<>();
         String sql = "SELECT * FROM ventas";
         try (Connection conn = DBManager.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                lista.add(new Reserva(
-                        rs.getInt("salas_idsala"),
-                        rs.getInt("usuarios_idusuario"),
-                        rs.getDate("fecha_creacion"),
-                        rs.getDate("fecha_reserva")
+                lista.add(new Usuario(
+                        rs.getString("nombres"),
+                        rs.getString("apellidos"),
+                        rs.getString("run")
                 ));
             }
 
@@ -57,17 +54,16 @@ public class ReservasDAO {
     }
 
     // UPDATE
-    public boolean actualizarReserva(Reserva reserva) {
-        String sql = "UPDATE reservas SET salas_idsala=?, usuarios_idusuario=?, fecha_creacion=?, fecha_reserva=?" +
-                     "WHERE idreserva=?";
+    public boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuarios SET nombres=?, apellidos=?, run=?" +
+                     "WHERE idusuario=?";
         try (Connection conn = DBManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        	stmt.setInt(1, reserva.getIdsala());
-            stmt.setInt(2, reserva.getIdusuario());
-            stmt.setDate(3, reserva.getFechaCreacion());
-            stmt.setDate(4, reserva.getFechaReserva());
-            stmt.setInt(5, reserva.getIdreserva());
+        	stmt.setString(1, usuario.getNombres());
+            stmt.setString(2, usuario.getApellidos());
+            stmt.setString(3, usuario.getRun());
+            stmt.setInt(4, usuario.getIdusuario());
 
             return stmt.executeUpdate() > 0;
 
@@ -78,12 +74,12 @@ public class ReservasDAO {
     }
 
     // DELETE
-    public boolean eliminarReserva(int idreserva) {
-        String sql = "DELETE FROM reservas WHERE idreserva=?";
+    public boolean eliminarUsuario(int idusuario) {
+        String sql = "DELETE FROM usuarios WHERE idusuario=?";
         try (Connection conn = DBManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, idreserva);
+            stmt.setInt(1, idusuario);
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException | IOException e) {

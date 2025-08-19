@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -8,11 +9,31 @@ public class Reserva {
 	private int idreserva;
 	private int idsala;
 	private int idusuario;
-	private LocalDate fechaCreacion;
-	private LocalDate fechaReserva;
+	private Date fechaCreacion;
+	private Date fechaReserva;
 	
 	public Reserva() {
 	}
+	
+	
+
+	/**
+	 * @param idreserva
+	 * @param idsala
+	 * @param idusuario
+	 * @param fechaCreacion
+	 * @param fechaReserva
+	 */
+	public Reserva(int idsala, int idusuario, Date fechaCreacion, Date fechaReserva) {
+
+		this.idreserva = 1;
+		this.idsala = idsala;
+		this.idusuario = idusuario;
+		this.fechaCreacion = fechaCreacion;
+		this.fechaReserva = fechaReserva;
+	}
+
+
 
 	/**
 	 * @return the idreserva
@@ -59,28 +80,28 @@ public class Reserva {
 	/**
 	 * @return the fechaCreacion
 	 */
-	public LocalDate getFechaCreacion() {
+	public Date getFechaCreacion() {
 		return fechaCreacion;
 	}
 
 	/**
 	 * @param fechaCreacion the fechaCreacion to set
 	 */
-	public void setFechaCreacion(LocalDate fechaCreacion) {
+	public void setFechaCreacion(Date fechaCreacion) {
 		this.fechaCreacion = fechaCreacion;
 	}
 
 	/**
 	 * @return the fechaReserva
 	 */
-	public LocalDate getFechaReserva() {
+	public Date getFechaReserva() {
 		return fechaReserva;
 	}
 
 	/**
 	 * @param fechaReserva the fechaReserva to set
 	 */
-	public void setFechaReserva(LocalDate fechaReserva) {
+	public void setFechaReserva(Date fechaReserva) {
 		this.fechaReserva = fechaReserva;
 	}
 

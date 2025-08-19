@@ -42,7 +42,16 @@ public class Sala {
 	 * @param nombre the nombre to set
 	 */
 	public void setNombre(String nombre) {
-		this.nombre = nombre;
+		if (nombre == null || nombre.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+					"⚠️ El nombre son obligatorio.");
+		}
+		try {
+			this.nombre = Validacion.validarLargoString(nombre, 1, 30);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(
+					"Nombre inválidos: " + e.getMessage());
+		}
 	}
 
 	/**

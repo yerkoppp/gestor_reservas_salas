@@ -60,8 +60,8 @@ public class DBCreacion {
 				        idreservas INT AUTO_INCREMENT PRIMARY KEY,  -- Clave primaria que se incrementa automáticamente
 				        salas_idsala INT NOT NULL, --
 				        usuarios_idusuario INT NOT NULL,
-				        fecha_creacion DATETIME NOT NULL,	-- Fecha y hora del registro (obligatorio)
-				        fecha_reserva DATETIME NOT NULL,       -- Fecha y hora de la reserva (obligatorio)
+				        fecha_creacion DATE NOT NULL,	-- Fecha y hora del registro (obligatorio)
+				        fecha_reserva DATE NOT NULL,       -- Fecha y hora de la reserva (obligatorio)
 				        observacion TEXT,              -- Contenido del mensaje
 				        CONSTRAINT reservas_salas FOREIGN KEY (salas_idsala) REFERENCES salas (idsala),
 				        CONSTRAINT reservas_usuario FOREIGN KEY (usuarios_idusuario) REFERENCES usuarios (idusuario)

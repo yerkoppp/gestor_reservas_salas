@@ -52,6 +52,23 @@ public class UsuariosDAO {
         return idUsuario;
     }
     
+    public boolean comprobarUsuario(Usuario usuario) {
+        String sql = "SELECT idusuario FROM usuarios WHERE run=?";
+        try (Connection conn = DBManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getRun());
+
+            try (ResultSet rs = stmt.executeQuery()){
+            	
+            	return rs.next(); 
+            }
+
+        } catch (SQLException | IOException e) {
+        	throw new RuntimeException("Error comprobando usuario", e);
+        }
+        
+    }
+    
     
 
     // READ

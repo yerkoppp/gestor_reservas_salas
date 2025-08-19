@@ -29,23 +29,6 @@ public final class Validacion {
 	private static final DateTimeFormatter FORMATTER_HHMM = DateTimeFormatter
 			.ofPattern("HH:mm");
 
-	/**
-	 * Definimos un array con los días de la semana.
-	 */
-	private static ArrayList<String> dias = new ArrayList<String>();
-
-	/**
-	 * Inicialización del ArrayList dias.
-	 */
-	static {
-		dias.add("LUNES");
-		dias.add("MARTES");
-		dias.add("MIÉRCOLES");
-		dias.add("JUEVES");
-		dias.add("VIERNES");
-		dias.add("SÁBADO");
-		dias.add("DOMINGO");
-	}
 
 	/**
 	 * Constructor privado para evitar la instanciación de la clase utilitaria.
@@ -65,6 +48,11 @@ public final class Validacion {
 	 *                                  la fecha no es válido.
 	 */
 	public static LocalDate validarFecha(String fecha) {
+		
+		DateTimeFormatter FORMATTER =
+		        DateTimeFormatter.ofPattern("dd/MM/uuuu")
+		                         .withResolverStyle(java.time.format.ResolverStyle.STRICT);
+		
 		// Primero, valida si la fecha es nula o vacía
 		if (fecha == null || fecha.trim().isEmpty()) {
 			throw new IllegalArgumentException(
@@ -132,40 +120,6 @@ public final class Validacion {
 		return hora.format(FORMATTER_HHMM);
 	}
 
-	/**
-	 * Valida que la cadena de texto de un día de la semana sea válida
-	 * (es decir, que sea uno de los siete días de la semana en español,
-	 * insensible a mayúsculas/minúsculas) y la retorna en mayúsculas.
-	 *
-	 * Este método es insensible a mayúsculas y minúsculas para la entrada,
-	 * pero siempre retornará el día en mayúsculas (ej: "LUNES").
-	 *
-	 * @param diaEvaluado La cadena de texto que representa el día a validar (ej: "Lunes", "MARTES").
-	 * @return La cadena del día validado y convertida a mayúsculas.
-	 * @throws IllegalArgumentException si {@code diaEvaluado} es {@code null}, está vacío
-	 * (incluyendo solo espacios en blanco), o no corresponde
-	 * a un día de la semana válido en español.
-	 */
-	public static String validarDia(String diaEvaluado) {
-	    // Primero, verifica si la entrada es nula o vacía (o solo espacios en blanco).
-	    // Esto previene un NullPointerException al intentar llamar a toUpperCase()
-	    // en una cadena nula, y también trata las cadenas vacías o con solo espacios
-	    // como inválidas.
-	    if (diaEvaluado == null || diaEvaluado.trim().isEmpty()) {
-	        throw new IllegalArgumentException(
-	                "⚠️ El día no es válido. Inténtelo de nuevo");
-	    }
-
-	    // Luego, verifica si el día (convertido a mayúsculas para ser insensible a mayúsculas/minúsculas)
-	    // está contenido en la lista predefinida de días válidos.
-	    if (!dias.contains(diaEvaluado.toUpperCase())) {
-	        throw new IllegalArgumentException(
-	                "⚠️ El día no es válido. Inténtelo de nuevo");
-	    }
-
-	    // Si todas las validaciones pasan, retorna el día en mayúsculas.
-	    return diaEvaluado.toUpperCase();
-	}
 
 	/**
 	 * Valida que la longitud de un texto esté dentro del rango especificado.
@@ -238,38 +192,6 @@ public final class Validacion {
 		return numeroEvaluado;
 	}
 
-	/**
-	 * Calcula la edad en años a partir de una fecha de nacimiento en formato
-	 * String (dd/MM/yyyy).
-	 *
-	 * @param fechaNacimientoStr La fecha de nacimiento en formato String (ej.
-	 *                           "25/12/1990").
-	 * @return La edad en años.
-	 * @throws IllegalArgumentException si el formato de fecha es inválido,
-	 * la fecha es nula, o si la fecha de nacimiento es en el futuro.
-	 */
-	public static int calcularEdad(String fechaNacimientoStr) {
-		LocalDate fechaNacimiento = validarFecha(fechaNacimientoStr);
-
-		if (fechaNacimiento == null) {
-			throw new IllegalArgumentException(
-					"Error: Formato de fecha de nacimiento inválido o fecha no válida.");
-
-		}
-
-		LocalDate fechaActual = LocalDate.now();
-
-		if (fechaNacimiento.isAfter(fechaActual)) {
-			throw new IllegalArgumentException(
-					"Error: La fecha de nacimiento no puede ser en el futuro.");
-		}
-
-		// Calcular la diferencia entre las dos fechas
-		Period periodo = Period.between(fechaNacimiento, fechaActual);
-
-		// Obtener los años de la diferencia
-		return periodo.getYears();
-	}
 
 	/**
 	 * Valida que un RUT chileno esté en el formato correcto y que su dígito

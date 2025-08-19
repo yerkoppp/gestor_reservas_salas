@@ -24,8 +24,8 @@ public class Usuario {
 	 */
 	public Usuario(String nombres, String apellidos, String run) {
 		this.idusuario = 1;
-		this.nombres = nombres;
-		this.apellidos = apellidos;
+		this.setNombres(nombres);
+		this.setApellidos(apellidos);
 		this.setRun(run);
 	}
 
@@ -60,7 +60,17 @@ public class Usuario {
 	 * @param nombres the nombres to set
 	 */
 	public void setNombres(String nombres) {
-		this.nombres = nombres;
+		
+		if (nombres == null || nombres.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+					"⚠️ Los nombres son obligatorio.");
+		}
+		try {
+			this.nombres = Validacion.validarLargoString(nombres, 5, 50);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(
+					"Nombre inválido: " + e.getMessage());
+		}
 	}
 
 
@@ -76,7 +86,16 @@ public class Usuario {
 	 * @param apellidos the apellidos to set
 	 */
 	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
+		if (apellidos == null || apellidos.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+					"⚠️ Los apellidos son obligatorio.");
+		}
+		try {
+			this.apellidos = Validacion.validarLargoString(apellidos, 5, 50);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(
+					"Apellidos inválidos: " + e.getMessage());
+		}
 	}
 
 
